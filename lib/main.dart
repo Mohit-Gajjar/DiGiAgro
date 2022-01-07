@@ -1,3 +1,4 @@
+import 'package:digiagro/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -87,17 +88,23 @@ class _RootState extends State<Root> {
                 fontWeight: FontWeight.bold,
                 color: Color(0xff99AE19)),
           ),
-          Container(
-            margin:const EdgeInsets.only(top: 30),
-            height: 50,
-            width: 200,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18),
-                color: const Color(0xffF7BB72)),
-            child: const Center(
-              child: Text(
-                "Get Field Data",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          const SizedBox(
+            height: 30,
+          ),
+          InkWell(
+            onTap: () => Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => const Home())),
+            child: Container(
+              height: 50,
+              width: 200,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18),
+                  color: const Color(0xffF7BB72)),
+              child: const Center(
+                child: Text(
+                  "Get Field Data",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           )
