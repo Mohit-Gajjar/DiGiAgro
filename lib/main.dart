@@ -1,5 +1,3 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:digiagro/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,34 +11,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'DiGiAgro',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(
             Theme.of(context).textTheme,
           ),
           primarySwatch: Colors.blue,
         ),
-        home: AnimatedSplashScreen(
-          nextScreen: const Home(),
-          splash: const SplashScreen(),
-        ));
+        home: const Root());
   }
 }
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class Root extends StatefulWidget {
+  const Root({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _RootState createState() => _RootState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(
             height: 100,
@@ -92,6 +87,20 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
                 color: Color(0xff99AE19)),
           ),
+          Container(
+            margin:const EdgeInsets.only(top: 30),
+            height: 50,
+            width: 200,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                color: const Color(0xffF7BB72)),
+            child: const Center(
+              child: Text(
+                "Get Field Data",
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ),
+          )
         ],
       ),
       bottomSheet: Image(
