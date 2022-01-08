@@ -1,5 +1,4 @@
 import 'package:digiagro/Sercives/services.dart';
-import 'package:digiagro/ktichenwaste.dart';
 import 'package:flutter/material.dart';
 
 class MakeManure extends StatefulWidget {
@@ -18,7 +17,14 @@ class _MakeManureState extends State<MakeManure> {
 
   Stream? getMedStream;
   Stream? getUsageStream;
+  Stream? getKitchenWasteStream;
+
   getMedsMethord() {
+    Database().getKitchenWaste().then((val) {
+      getKitchenWasteStream = val;
+      print(val);
+      setState(() {});
+    });
     Database().getManureExpiredMedicine().then((val) {
       getMedStream = val;
       print(val);
@@ -79,10 +85,37 @@ class _MakeManureState extends State<MakeManure> {
         });
   }
 
+  Widget getKitchenWasteWidget() {
+    return StreamBuilder(
+        stream: getKitchenWasteStream,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          return snapshot.hasData
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height / .5,
+                  child: ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return KitchenWaste(
+                            meth1: snapshot.data.docs[index]['Benefits'],
+                            meth2: snapshot.data.docs[index]
+                                ['Egg Shells Manure'],
+                            meth3: snapshot.data.docs[index]['Pot Composting'],
+                            meth4: snapshot.data.docs[index]
+                                ['The Bokashi Method'],
+                            meth5: snapshot.data.docs[index]
+                                ['Vermicomposting']);
+                      }),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -99,11 +132,16 @@ class _MakeManureState extends State<MakeManure> {
                 Text(
                   "Expired Medicine",
                 ),
+                Text("Usage of Meds"),
                 Text("Kitchen Waste"),
               ]),
         ),
         body: TabBarView(
-          children: [getMedsWidget(), getMedsUsageWidget()],
+          children: [
+            getMedsWidget(),
+            getMedsUsageWidget(),
+            getKitchenWasteWidget()
+          ],
         ),
       ),
     );
@@ -237,6 +275,103 @@ class MedUsage extends StatelessWidget {
           subtitle: Text(meth3),
         ),
       ],
+    );
+  }
+}
+
+class KitchenWaste extends StatefulWidget {
+  final List<dynamic> meth1, meth2, meth3, meth4, meth5;
+  const KitchenWaste(
+      {Key? key,
+      required this.meth1,
+      required this.meth2,
+      required this.meth3,
+      required this.meth4,
+      required this.meth5})
+      : super(key: key);
+
+  @override
+  _KitchenWasteState createState() => _KitchenWasteState();
+}
+
+class _KitchenWasteState extends State<KitchenWaste> {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Text(
+            'Benefits',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 500,
+            child: ListView.builder(
+                itemCount: widget.meth1.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(widget.meth1[index]),
+                  );
+                }),
+          ),
+          const Text(
+            'Egg Shells Manure',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 500,
+            child: ListView.builder(
+                itemCount: widget.meth2.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(widget.meth2[index]),
+                  );
+                }),
+          ),
+          const Text(
+            'Pot Composting',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 700,
+            child: ListView.builder(
+                itemCount: widget.meth3.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(widget.meth3[index]),
+                  );
+                }),
+          ),
+          const Text(
+            'The Bokashi Method',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 500,
+            child: ListView.builder(
+                itemCount: widget.meth4.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(widget.meth4[index]),
+                  );
+                }),
+          ),
+          const Text(
+            'Vermicomposting',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 500,
+            child: ListView.builder(
+                itemCount: widget.meth5.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(widget.meth5[index]),
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

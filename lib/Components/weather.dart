@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class Weather extends StatefulWidget {
   final String summary;
   final String icon;
-  final String temprature;
-  final String apperentTemperature;
+  final double temprature;
+  final double apperentTemperature;
   final String dewPoint;
   final String humidity;
   final String pressure;
@@ -29,8 +29,13 @@ class Weather extends StatefulWidget {
 }
 
 class _WeatherState extends State<Weather> {
+  double temp = 0.0;
+  double apperentTemp = 0.0;
+
   @override
   Widget build(BuildContext context) {
+    temp = (widget.temprature - 32) * 5 / 9;
+    apperentTemp = (widget.apperentTemperature - 32) * 5 / 9;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -39,7 +44,7 @@ class _WeatherState extends State<Weather> {
                 "https://assetambee.s3-us-west-2.amazonaws.com/weatherIcons/PNG/" +
                     widget.icon +
                     ".png"),
-            width: MediaQuery.of(context).size.width / 6,
+            width: MediaQuery.of(context).size.width / 8,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -85,23 +90,23 @@ class _WeatherState extends State<Weather> {
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(
-                    widget.temprature,
+                    temp.toStringAsFixed(2) + " ℃",
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(
-                    widget.apperentTemperature,
+                    apperentTemp.toStringAsFixed(2) + " ℃",
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(
-                    widget.dewPoint,
+                    widget.dewPoint + " ° F",
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(
-                    widget.humidity,
+                    widget.humidity + " %",
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(
-                    widget.pressure,
+                    widget.pressure + " hPa",
                     style: const TextStyle(fontSize: 18),
                   ),
                   Text(

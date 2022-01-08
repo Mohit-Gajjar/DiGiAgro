@@ -2,7 +2,8 @@ import 'package:digiagro/crops.dart';
 import 'package:flutter/material.dart';
 
 class Soil extends StatefulWidget {
-  final String temp, moisture, type;
+  final String type;
+  final double temp, moisture;
   const Soil(
       {Key? key,
       required this.temp,
@@ -15,7 +16,6 @@ class Soil extends StatefulWidget {
 }
 
 class _SoilState extends State<Soil> {
- 
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,11 +40,11 @@ class _SoilState extends State<Soil> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  widget.temp,
+                  widget.temp.toStringAsFixed(2) + " ℃",
                   style: const TextStyle(fontSize: 18),
                 ),
                 Text(
-                  widget.moisture,
+                  widget.moisture.toStringAsFixed(2) + "%",
                   style: const TextStyle(fontSize: 18),
                 ),
               ],

@@ -88,15 +88,15 @@ class _CropsState extends State<Crops> {
 
 class CropsTitle extends StatelessWidget {
   final String title, varieties, temperature, soil, rainfall, producers;
-  const CropsTitle(
-      {Key? key,
-      required this.title,
-      required this.varieties,
-      required this.temperature,
-      required this.soil,
-      required this.rainfall,
-      required this.producers,})
-      : super(key: key);
+  const CropsTitle({
+    Key? key,
+    required this.title,
+    required this.varieties,
+    required this.temperature,
+    required this.soil,
+    required this.rainfall,
+    required this.producers,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +111,7 @@ class CropsTitle extends StatelessWidget {
                     temperature: temperature,
                     soil: soil,
                     rainfall: rainfall,
-                    producers: producers
-                    )));
+                    producers: producers)));
       },
       title: Text(title,
           style: const TextStyle(

@@ -71,15 +71,15 @@ class _HomeState extends State<Home> {
   String aqi = "";
   String summary = "",
       icon = "",
-      temprature = "",
-      apperentTemperature = "",
+      // temprature = "",
+      // apperentTemperature = "",
       dewPoint = "",
       humidity = "",
       pressure = "",
       uvindex = "",
       ozoneWeather = "";
 
-  String temp = "", moisture = "";
+  double temp = 0.0, moisture = 0.0, temprature = 0.0, apperentTemperature = 0.0;
   String soilType = "";
   bool isLoading = false;
   _getData() async {
@@ -130,9 +130,9 @@ class _HomeState extends State<Home> {
         //Weather Data of user's location
         summary = weatherData['data']['summary'];
         icon = weatherData['data']['icon'];
-        temprature = weatherData['data']['temperature'].toString();
+        temprature = weatherData['data']['temperature'];
         apperentTemperature =
-            weatherData['data']['apparentTemperature'].toString();
+            weatherData['data']['apparentTemperature'];
         dewPoint = weatherData['data']['dewPoint'].toString();
         humidity = weatherData['data']['humidity'].toString();
         pressure = weatherData['data']['pressure'].toString();
@@ -144,8 +144,8 @@ class _HomeState extends State<Home> {
           });
         });
         // Soil Data of User's Location
-        temp = soilData['data'][0]['soil_temperature'].toString();
-        moisture = soilData['data'][0]['soil_moisture'].toString();
+        temp = soilData['data'][0]['soil_temperature'];
+        moisture = soilData['data'][0]['soil_moisture'];
         isLoading = false;
       });
     } catch (e) {
@@ -161,7 +161,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 30,
+                    height: 80,
                   ),
                   Center(
                     child: Column(

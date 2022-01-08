@@ -35,31 +35,31 @@ class _AirState extends State<Air> {
           children: const [
             Text(
               "CO2: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               "NO2: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               "OZONE: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               "PM10: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               "PM25: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               "SO2: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
               "AQI: ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
           ],
         ),
@@ -67,28 +67,28 @@ class _AirState extends State<Air> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              widget.co,
-              style: const TextStyle(fontSize: 24),
+              widget.co + " ppm",
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
-              widget.no2,
-              style: const TextStyle(fontSize: 24),
+              widget.no2 + " ppb",
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
-              widget.ozone,
-              style: const TextStyle(fontSize: 24),
+              widget.ozone + " ppb",
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
-              widget.pm10,
-              style: const TextStyle(fontSize: 24),
+              widget.pm10 + " <10um (ug/m3)",
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
-              widget.pm25,
-              style: const TextStyle(fontSize: 24),
+              widget.pm25 + " <10um (ug/m3)",
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
-              widget.so2,
-              style: const TextStyle(fontSize: 24),
+              widget.so2 + " ppb",
+              style: const TextStyle(fontSize: 18),
             ),
             Text(
               widget.aqi,

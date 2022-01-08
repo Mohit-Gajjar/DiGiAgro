@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 
 class Database {
   Future<String> getData(String city) async {
@@ -8,6 +9,14 @@ class Database {
     DocumentSnapshot snapshot = await reference.doc(city).get();
     var dataOfSoil = snapshot.data() as Map;
     return dataOfSoil['soil'].toString();
+  }
+
+  getKitchenWaste() async {
+    return FirebaseFirestore.instance
+        .collection('manure')
+        .doc('kitchenWaste')
+        .collection('methods')
+        .snapshots();
   }
 
   getCrops(String soil) async {
