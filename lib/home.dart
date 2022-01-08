@@ -4,6 +4,8 @@ import 'package:digiagro/Components/weather.dart';
 import 'package:digiagro/Sercives/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:geocoder/geocoder.dart';
 import 'package:location/location.dart';
 
 class Home extends StatefulWidget {
@@ -61,6 +63,7 @@ class _HomeState extends State<Home> {
   String state = "";
   String country = "";
   String place = "";
+  String divistion = "";
 
   String co = "";
   String no2 = "";
@@ -76,7 +79,7 @@ class _HomeState extends State<Home> {
       pressure = "",
       uvindex = "",
       ozoneWeather = "";
-
+  String yourCityName = "";
   double temp = 0.0,
       moisture = 0.0,
       temprature = 0.0,
@@ -88,6 +91,14 @@ class _HomeState extends State<Home> {
       isLoading = true;
     });
     _locationData = await location.getLocation();
+    var addresses;
+    final coordinates =
+        Coordinates(_locationData!.latitude, _locationData!.longitude);
+    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+
+    setState(() {
+      yourCityName = addresses.first.locality;
+    });
 
     try {
       var air = await Dio().get(
@@ -110,13 +121,14 @@ class _HomeState extends State<Home> {
               '&lng=' +
               _locationData!.longitude.toString(),
           options: Options(headers: {"x-api-key": url}));
-
       soilData = soil.data;
       weatherData = weather.data;
       airData = air.data;
       setState(() {
         // Air Data of user's location
-        city = airData['stations'][0]['division'];
+        city = airData['stations'][0]['city'];
+
+        divistion = airData['stations'][0]['division'];
         country = airData['stations'][0]['countryCode'];
         state = airData['stations'][0]['state'];
         place = airData['stations'][0]['placeName'];
@@ -138,7 +150,7 @@ class _HomeState extends State<Home> {
         pressure = weatherData['data']['pressure'].toString();
         uvindex = weatherData['data']['uvIndex'].toString();
         ozoneWeather = weatherData['data']['ozone'].toString();
-        Database().getData(city).then((value) {
+        Database().getData(yourCityName).then((value) {
           setState(() {
             soilType = value;
           });
@@ -166,7 +178,7 @@ class _HomeState extends State<Home> {
                     child: Column(
                       children: [
                         Text(
-                          place + ", " + city,
+                          place + ", " + divistion,
                           style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width / 20,
                             fontWeight: FontWeight.bold,
