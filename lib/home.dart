@@ -81,7 +81,11 @@ class _HomeState extends State<Home> {
 
   String temp = "", moisture = "";
   String soilType = "";
+  bool isLoading = false;
   _getData() async {
+    setState(() {
+      isLoading = true;
+    });
     _locationData = await location.getLocation();
 
     try {
@@ -124,7 +128,6 @@ class _HomeState extends State<Home> {
         so2 = airData['stations'][0]['SO2'].toString();
 
         //Weather Data of user's location
-
         summary = weatherData['data']['summary'];
         icon = weatherData['data']['icon'];
         temprature = weatherData['data']['temperature'].toString();
@@ -143,6 +146,7 @@ class _HomeState extends State<Home> {
         // Soil Data of User's Location
         temp = soilData['data'][0]['soil_temperature'].toString();
         moisture = soilData['data'][0]['soil_moisture'].toString();
+        isLoading = false;
       });
     } catch (e) {
       print(e);
@@ -152,130 +156,137 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            Center(
+      body: !isLoading
+          ? SingleChildScrollView(
               child: Column(
                 children: [
-                  Text(
-                    place + ", " + city,
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 20,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          place + ", " + city,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          state + ", " + country,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 20,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    state + ", " + country,
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 20,
-                    ),
+                  const SizedBox(
+                    height: 20,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              soilBool = true;
+                              weatherBool = false;
+                              airBool = false;
+                            });
+                          },
+                          child: Text(
+                            'Soil',
+                            style: TextStyle(
+                                fontSize: 26,
+                                color: soilBool ? Colors.black : Colors.black38,
+                                fontWeight: soilBool
+                                    ? FontWeight.bold
+                                    : FontWeight.w100),
+                          )),
+                      Container(
+                        height: 40,
+                        width: 2,
+                        color: Colors.black,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              soilBool = false;
+                              weatherBool = true;
+                              airBool = false;
+                            });
+                          },
+                          child: Text(
+                            'Weather',
+                            style: TextStyle(
+                                fontSize: 26,
+                                color:
+                                    weatherBool ? Colors.black : Colors.black38,
+                                fontWeight: weatherBool
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          )),
+                      Container(
+                        height: 40,
+                        width: 2,
+                        color: Colors.black,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            setState(() {
+                              soilBool = false;
+                              weatherBool = false;
+                              airBool = true;
+                            });
+                          },
+                          child: Text(
+                            'Air',
+                            style: TextStyle(
+                                fontSize: 26,
+                                color: airBool ? Colors.black : Colors.black38,
+                                fontWeight: airBool
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          )),
+                    ],
+                  ),
+                  soilBool
+                      ? Soil(
+                          moisture: moisture,
+                          temp: temp,
+                          type: soilType,
+                        )
+                      : weatherBool
+                          ? Weather(
+                              dewPoint: dewPoint,
+                              humidity: humidity,
+                              icon: icon,
+                              ozone: ozone,
+                              pressure: pressure,
+                              summary: summary,
+                              temprature: temprature,
+                              apperentTemperature: apperentTemperature,
+                              uvindex: uvindex,
+                            )
+                          : airBool
+                              ? Air(
+                                  aqi: aqi,
+                                  co: co,
+                                  no2: no2,
+                                  ozone: ozone,
+                                  pm10: pm10,
+                                  pm25: pm25,
+                                  so2: so2,
+                                )
+                              : Container()
                 ],
               ),
+            )
+          : const Center(
+              child: CircularProgressIndicator(),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        soilBool = true;
-                        weatherBool = false;
-                        airBool = false;
-                      });
-                    },
-                    child: Text(
-                      'Soil',
-                      style: TextStyle(
-                          fontSize: 26,
-                          color: soilBool ? Colors.black : Colors.black38,
-                          fontWeight:
-                              soilBool ? FontWeight.bold : FontWeight.w100),
-                    )),
-                Container(
-                  height: 40,
-                  width: 2,
-                  color: Colors.black,
-                ),
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        soilBool = false;
-                        weatherBool = true;
-                        airBool = false;
-                      });
-                    },
-                    child: Text(
-                      'Weather',
-                      style: TextStyle(
-                          fontSize: 26,
-                          color: weatherBool ? Colors.black : Colors.black38,
-                          fontWeight: weatherBool
-                              ? FontWeight.bold
-                              : FontWeight.normal),
-                    )),
-                Container(
-                  height: 40,
-                  width: 2,
-                  color: Colors.black,
-                ),
-                TextButton(
-                    onPressed: () {
-                      setState(() {
-                        soilBool = false;
-                        weatherBool = false;
-                        airBool = true;
-                      });
-                    },
-                    child: Text(
-                      'Air',
-                      style: TextStyle(
-                          fontSize: 26,
-                          color: airBool ? Colors.black : Colors.black38,
-                          fontWeight:
-                              airBool ? FontWeight.bold : FontWeight.normal),
-                    )),
-              ],
-            ),
-            soilBool
-                ? Soil(
-                    moisture: moisture,
-                    temp: temp,
-                    type: soilType,
-                  )
-                : weatherBool
-                    ? Weather(
-                        dewPoint: dewPoint,
-                        humidity: humidity,
-                        icon: icon,
-                        ozone: ozone,
-                        pressure: pressure,
-                        summary: summary,
-                        temprature: temprature,
-                        apperentTemperature: apperentTemperature,
-                        uvindex: uvindex,
-                      )
-                    : airBool
-                        ? Air(
-                            aqi: aqi,
-                            co: co,
-                            no2: no2,
-                            ozone: ozone,
-                            pm10: pm10,
-                            pm25: pm25,
-                            so2: so2,
-                          )
-                        : Container()
-          ],
-        ),
-      ),
       bottomSheet: Image(
         image: const AssetImage('assets/home.png'),
         width: MediaQuery.of(context).size.width,

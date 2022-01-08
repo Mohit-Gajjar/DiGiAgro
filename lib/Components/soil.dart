@@ -15,6 +15,7 @@ class Soil extends StatefulWidget {
 }
 
 class _SoilState extends State<Soil> {
+ 
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,18 +59,26 @@ class _SoilState extends State<Soil> {
           children: [
             const Text("Soil Type: ",
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            Text(widget.type,
-                style: const TextStyle(
-                  fontSize: 14,
-                )),
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: Text(widget.type,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 14,
+                  )),
+            ),
           ],
         ),
         const SizedBox(
           height: 30,
         ),
         InkWell(
-          onTap: () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => const Crops())),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Crops(
+                        soil: widget.type,
+                      ))),
           child: Container(
             height: 50,
             width: 200,
