@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool weatherBool = false;
-  bool soilBool = false;
+  bool soilBool = true;
   bool airBool = false;
   @override
   void initState() {
@@ -77,24 +77,18 @@ class _HomeState extends State<Home> {
       pressure = "",
       uvindex = "",
       ozoneWeather = "";
-  var weatherdata;
 
+  String temp = "", moisture = "";
   _getData() async {
     _locationData = await location.getLocation();
-    print(_locationData!.latitude.toString() +
-        "  " +
-        _locationData!.longitude.toString());
 
     try {
-      // var air = await Dio().get(
-      //     'https://api.ambeedata.com/latest/by-lat-lng?lat=' +
-      //         _locationData!.latitude.toString() +
-      //         '&lng=' +
-      //         _locationData!.longitude.toString(),
-      //     options: Options(headers: {
-      //       "x-api-key":
-      //           url
-      //     }));
+      var air = await Dio().get(
+          'https://api.ambeedata.com/latest/by-lat-lng?lat=' +
+              _locationData!.latitude.toString() +
+              '&lng=' +
+              _locationData!.longitude.toString(),
+          options: Options(headers: {"x-api-key": url}));
 
       var weather = await Dio().get(
           'https://api.ambeedata.com/weather/latest/by-lat-lng?lat=' +
@@ -103,49 +97,50 @@ class _HomeState extends State<Home> {
               _locationData!.longitude.toString(),
           options: Options(headers: {"x-api-key": url}));
 
-      // var soil = await Dio().get(
-      //     'https://api.ambeedata.com/soil/latest/by-lat-lng?lat=' +
-      //         _locationData!.latitude.toString() +
-      //         '&lng=' +
-      //         _locationData!.longitude.toString(),
-      //     options: Options(headers: {
-      //       "x-api-key":
-      //           url
-      //     }));
+      var soil = await Dio().get(
+          'https://api.ambeedata.com/soil/latest/by-lat-lng?lat=' +
+              _locationData!.latitude.toString() +
+              '&lng=' +
+              _locationData!.longitude.toString(),
+          options: Options(headers: {"x-api-key": url}));
 
-      // soilData = soil.data;
+      soilData = soil.data;
       weatherData = weather.data;
-      // airData = air.data;
+      airData = air.data;
       setState(() {
         // Air Data of user's location
-        // city = airData['stations'][0]['division'];
-        // country = airData['stations'][0]['countryCode'];
-        // state = airData['stations'][0]['state'];
-        // place = airData['stations'][0]['placeName'];
-        // co = airData['stations'][0]['CO'].toString();
-        // no2 = airData['stations'][0]['NO2'].toString();
-        // ozone = airData['stations'][0]['OZONE'].toString();
-        // pm10 = airData['stations'][0]['PM10'].toString();
-        // pm25 = airData['stations'][0]['PM25'].toString();
-        // aqi = airData['stations'][0]['AQI'].toString();
-        // so2 = airData['stations'][0]['SO2'].toString();
+        city = airData['stations'][0]['division'];
+        country = airData['stations'][0]['countryCode'];
+        state = airData['stations'][0]['state'];
+        place = airData['stations'][0]['placeName'];
+        co = airData['stations'][0]['CO'].toString();
+        no2 = airData['stations'][0]['NO2'].toString();
+        ozone = airData['stations'][0]['OZONE'].toString();
+        pm10 = airData['stations'][0]['PM10'].toString();
+        pm25 = airData['stations'][0]['PM25'].toString();
+        aqi = airData['stations'][0]['AQI'].toString();
+        so2 = airData['stations'][0]['SO2'].toString();
 
         //Weather Data of user's location
 
         summary = weatherData['data']['summary'];
         icon = weatherData['data']['icon'];
         temprature = weatherData['data']['temperature'].toString();
-        apperentTemperature = weatherData['data']['apparentTemperature'].toString();
+        apperentTemperature =
+            weatherData['data']['apparentTemperature'].toString();
         dewPoint = weatherData['data']['dewPoint'].toString();
         humidity = weatherData['data']['humidity'].toString();
         pressure = weatherData['data']['pressure'].toString();
         uvindex = weatherData['data']['uvIndex'].toString();
         ozoneWeather = weatherData['data']['ozone'].toString();
+
+        temp = soilData['data'][0]['soil_temperature'].toString();
+        moisture = soilData['data'][0]['soil_moisture'].toString();
       });
 
-      // print(airData);
+      // print(soilData['data'][0]['soil_temperature'].toString());
       // print(city);
-      print(summary);
+
     } catch (e) {
       print(e);
     }
@@ -247,7 +242,10 @@ class _HomeState extends State<Home> {
               ],
             ),
             soilBool
-                ? Soil()
+                ? Soil(
+                    moisture: moisture,
+                    temp: temp,
+                  )
                 : weatherBool
                     ? Weather(
                         dewPoint: dewPoint,
