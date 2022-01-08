@@ -1,6 +1,6 @@
+import 'package:digiagro/Components/make_manure.dart';
 import 'package:digiagro/Sercives/services.dart';
-import 'package:digiagro/crop_profile.dart';
-import 'package:digiagro/make_manure.dart';
+import 'package:digiagro/Components/crop_profile.dart';
 import 'package:flutter/material.dart';
 
 class Crops extends StatefulWidget {
@@ -22,7 +22,6 @@ class _CropsState extends State<Crops> {
   getCropsMethord() {
     Database().getCrops(widget.soil).then((val) {
       getCropsStream = val;
-      print(val);
       setState(() {});
     });
   }

@@ -71,15 +71,16 @@ class _HomeState extends State<Home> {
   String aqi = "";
   String summary = "",
       icon = "",
-      // temprature = "",
-      // apperentTemperature = "",
       dewPoint = "",
       humidity = "",
       pressure = "",
       uvindex = "",
       ozoneWeather = "";
 
-  double temp = 0.0, moisture = 0.0, temprature = 0.0, apperentTemperature = 0.0;
+  double temp = 0.0,
+      moisture = 0.0,
+      temprature = 0.0,
+      apperentTemperature = 0.0;
   String soilType = "";
   bool isLoading = false;
   _getData() async {
@@ -131,8 +132,7 @@ class _HomeState extends State<Home> {
         summary = weatherData['data']['summary'];
         icon = weatherData['data']['icon'];
         temprature = weatherData['data']['temperature'];
-        apperentTemperature =
-            weatherData['data']['apparentTemperature'];
+        apperentTemperature = weatherData['data']['apparentTemperature'];
         dewPoint = weatherData['data']['dewPoint'].toString();
         humidity = weatherData['data']['humidity'].toString();
         pressure = weatherData['data']['pressure'].toString();
@@ -148,9 +148,8 @@ class _HomeState extends State<Home> {
         moisture = soilData['data'][0]['soil_moisture'];
         isLoading = false;
       });
-    } catch (e) {
-      print(e);
-    }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   @override

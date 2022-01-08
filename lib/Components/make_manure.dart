@@ -22,17 +22,14 @@ class _MakeManureState extends State<MakeManure> {
   getMedsMethord() {
     Database().getKitchenWaste().then((val) {
       getKitchenWasteStream = val;
-      print(val);
       setState(() {});
     });
     Database().getManureExpiredMedicine().then((val) {
       getMedStream = val;
-      print(val);
       setState(() {});
     });
     Database().getManureExpiredMedicineUsage().then((val) {
       getUsageStream = val;
-      print(val);
       setState(() {});
     });
   }
