@@ -25,4 +25,13 @@ class Database {
         .where('key', isEqualTo: 'med1')
         .snapshots();
   }
+
+  getManureExpiredMedicineUsage() async {
+    return FirebaseFirestore.instance
+        .collection('manure')
+        .doc('expiredMedicine')
+        .collection('use')
+        .where('key', isEqualTo: 'usage')
+        .snapshots();
+  }
 }
