@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
       airData = air.data;
       setState(() {
         // Air Data of user's location
-        city = airData['stations'][0]['city'];
+        city = airData['stations'][0]['division'];
         country = airData['stations'][0]['countryCode'];
         state = airData['stations'][0]['state'];
         place = airData['stations'][0]['placeName'];
