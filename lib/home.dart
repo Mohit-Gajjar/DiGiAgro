@@ -1,6 +1,7 @@
 import 'package:digiagro/Components/air.dart';
 import 'package:digiagro/Components/soil.dart';
 import 'package:digiagro/Components/weather.dart';
+import 'package:digiagro/Sercives/services.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -79,6 +80,7 @@ class _HomeState extends State<Home> {
       ozoneWeather = "";
 
   String temp = "", moisture = "";
+  String soilType = "";
   _getData() async {
     _locationData = await location.getLocation();
 
@@ -133,14 +135,15 @@ class _HomeState extends State<Home> {
         pressure = weatherData['data']['pressure'].toString();
         uvindex = weatherData['data']['uvIndex'].toString();
         ozoneWeather = weatherData['data']['ozone'].toString();
-
+        Database().getData(city).then((value) {
+          setState(() {
+            soilType = value;
+          });
+        });
+        // Soil Data of User's Location
         temp = soilData['data'][0]['soil_temperature'].toString();
         moisture = soilData['data'][0]['soil_moisture'].toString();
       });
-
-      // print(soilData['data'][0]['soil_temperature'].toString());
-      // print(city);
-
     } catch (e) {
       print(e);
     }
@@ -245,6 +248,7 @@ class _HomeState extends State<Home> {
                 ? Soil(
                     moisture: moisture,
                     temp: temp,
+                    type: soilType,
                   )
                 : weatherBool
                     ? Weather(
