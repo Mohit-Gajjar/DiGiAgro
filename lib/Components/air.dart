@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 
 class Air extends StatefulWidget {
- final dynamic airData;
-  const Air({Key? key,required this.airData}) : super(key: key);
+  final String co;
+  final String no2;
+  final String ozone;
+  final String pm25;
+  final String so2;
+  final String pm10;
+  final String aqi;
+  const Air({
+    Key? key,
+    required this.co,
+    required this.no2,
+    required this.ozone,
+    required this.pm25,
+    required this.so2,
+    required this.pm10,
+    required this.aqi,
+  }) : super(key: key);
 
   @override
   _AirState createState() => _AirState();
@@ -11,149 +26,56 @@ class Air extends StatefulWidget {
 class _AirState extends State<Air> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: const [
-          Text("CO2"),
-          Text("NO2"),
-          Text("OZONE"),
-          Text("CO2"),
-          Text("CO2"),
-          Text("CO2"),
-          Text("CO2"),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              "CO2: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "NO2: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "OZONE: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "PM10: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "PM25: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "SO2: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "AQI: ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(widget.co),
+            Text(widget.no2),
+            Text(widget.ozone),
+            Text(widget.pm10),
+            Text(widget.pm25),
+            Text(widget.so2),
+            Text(widget.aqi),
+          ],
+        ),
+      ],
     );
-  }
-}
-class AirData {
-  String? message;
-  List<Stations>? stations;
-
-  AirData({this.message, this.stations});
-
-  AirData.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    if (json['stations'] != null) {
-      stations = <Stations>[];
-      json['stations'].forEach((v) {
-        stations!.add(new Stations.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    if (this.stations != null) {
-      data['stations'] = this.stations!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Stations {
-  double? cO;
-  double? nO2;
-  double? oZONE;
-  double? pM10;
-  double? pM25;
-  double? sO2;
-  String? city;
-  String? countryCode;
-  String? division;
-  double? lat;
-  double? lng;
-  String? placeName;
-  String? postalCode;
-  String? state;
-  String? updatedAt;
-  int? aQI;
-  AqiInfo? aqiInfo;
-
-  Stations(
-      {this.cO,
-      this.nO2,
-      this.oZONE,
-      this.pM10,
-      this.pM25,
-      this.sO2,
-      this.city,
-      this.countryCode,
-      this.division,
-      this.lat,
-      this.lng,
-      this.placeName,
-      this.postalCode,
-      this.state,
-      this.updatedAt,
-      this.aQI,
-      this.aqiInfo});
-
-  Stations.fromJson(Map<String, dynamic> json) {
-    cO = json['CO'];
-    nO2 = json['NO2'];
-    oZONE = json['OZONE'];
-    pM10 = json['PM10'];
-    pM25 = json['PM25'];
-    sO2 = json['SO2'];
-    city = json['city'];
-    countryCode = json['countryCode'];
-    division = json['division'];
-    lat = json['lat'];
-    lng = json['lng'];
-    placeName = json['placeName'];
-    postalCode = json['postalCode'];
-    state = json['state'];
-    updatedAt = json['updatedAt'];
-    aQI = json['AQI'];
-    aqiInfo =
-        json['aqiInfo'] != null ? new AqiInfo.fromJson(json['aqiInfo']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['CO'] = this.cO;
-    data['NO2'] = this.nO2;
-    data['OZONE'] = this.oZONE;
-    data['PM10'] = this.pM10;
-    data['PM25'] = this.pM25;
-    data['SO2'] = this.sO2;
-    data['city'] = this.city;
-    data['countryCode'] = this.countryCode;
-    data['division'] = this.division;
-    data['lat'] = this.lat;
-    data['lng'] = this.lng;
-    data['placeName'] = this.placeName;
-    data['postalCode'] = this.postalCode;
-    data['state'] = this.state;
-    data['updatedAt'] = this.updatedAt;
-    data['AQI'] = this.aQI;
-    if (this.aqiInfo != null) {
-      data['aqiInfo'] = this.aqiInfo!.toJson();
-    }
-    return data;
-  }
-}
-
-class AqiInfo {
-  String? pollutant;
-  double? concentration;
-  String? category;
-
-  AqiInfo({this.pollutant, this.concentration, this.category});
-
-  AqiInfo.fromJson(Map<String, dynamic> json) {
-    pollutant = json['pollutant'];
-    concentration = json['concentration'];
-    category = json['category'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['pollutant'] = this.pollutant;
-    data['concentration'] = this.concentration;
-    data['category'] = this.category;
-    return data;
   }
 }

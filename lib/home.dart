@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:digiagro/Components/air.dart';
+import 'package:digiagro/Components/soil.dart';
+import 'package:digiagro/Components/weather.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -50,6 +52,18 @@ class _HomeState extends State<Home> {
     }
   }
 
+  String city = "";
+  String state = "";
+  String country = "";
+  String place = "";
+
+  String co = "";
+  String no2 = "";
+  String ozone = "";
+  String pm25 = "";
+  String so2 = "";
+  String pm10 = "";
+  String aqi = "";
   _getData() async {
     _locationData = await location.getLocation();
     print(_locationData!.latitude.toString() +
@@ -72,7 +86,6 @@ class _HomeState extends State<Home> {
               _locationData!.latitude.toString() +
               '&lng=' +
               _locationData!.longitude.toString(),
-          // "https://api.ambeedata.com/latest/by-lat-lng?lat=22.355302&lng=73.202966",
           options: Options(headers: {
             "x-api-key":
                 "d47129800d508040a9faf66ba325984de9c42133a55022743f42eb925c82eb87"
@@ -83,22 +96,35 @@ class _HomeState extends State<Home> {
               _locationData!.latitude.toString() +
               '&lng=' +
               _locationData!.longitude.toString(),
-          // "https://api.ambeedata.com/latest/by-lat-lng?lat=22.355302&lng=73.202966",
           options: Options(headers: {
             "x-api-key":
                 "d47129800d508040a9faf66ba325984de9c42133a55022743f42eb925c82eb87"
           }));
+
       soilData = soil.data;
       weatherData = weather.data;
       airData = air.data;
+      setState(() {
+        city = airData['stations'][0]['division'];
+        country = airData['stations'][0]['countryCode'];
+        state = airData['stations'][0]['state'];
+        place = airData['stations'][0]['placeName'];
+        co = airData['stations'][0]['CO'].toString();
+        no2 = airData['stations'][0]['NO2'].toString();
+        ozone = airData['stations'][0]['OZONE'].toString();
+        pm10 = airData['stations'][0]['PM10'].toString();
+        pm25 = airData['stations'][0]['PM25'].toString();
+        aqi = airData['stations'][0]['AQI'].toString();
+        so2 = airData['stations'][0]['SO2'].toString();
+      });
+
       print(airData);
-      // print(soilData);
+      print(city);
     } catch (e) {
       print(e);
     }
   }
 
-  // AirData air = AirData.fromJson(jsonDecode(soilData));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,14 +138,14 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Text(
-                    "air.stations",
+                    place + ", " + city,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width / 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Gujarat, India",
+                    state + ", " + country,
                     style: TextStyle(
                       fontSize: MediaQuery.of(context).size.width / 20,
                     ),
@@ -193,7 +219,22 @@ class _HomeState extends State<Home> {
                               airBool ? FontWeight.bold : FontWeight.normal),
                     )),
               ],
-            )
+            ),
+            soilBool
+                ? Soil()
+                : weatherBool
+                    ? Weather()
+                    : airBool
+                        ? Air(
+                            aqi: aqi,
+                            co: co,
+                            no2: no2,
+                            ozone: ozone,
+                            pm10: pm10,
+                            pm25: pm25,
+                            so2: so2,
+                          )
+                        : Container()
           ],
         ),
       ),
