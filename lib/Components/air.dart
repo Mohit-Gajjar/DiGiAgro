@@ -35,44 +35,65 @@ class _AirState extends State<Air> {
           children: const [
             Text(
               "CO2: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
               "NO2: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
               "OZONE: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
               "PM10: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
               "PM25: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
               "SO2: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             Text(
               "AQI: ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
           ],
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(widget.co),
-            Text(widget.no2),
-            Text(widget.ozone),
-            Text(widget.pm10),
-            Text(widget.pm25),
-            Text(widget.so2),
-            Text(widget.aqi),
+            Text(
+              widget.co,
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              widget.no2,
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              widget.ozone,
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              widget.pm10,
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              widget.pm25,
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              widget.so2,
+              style: const TextStyle(fontSize: 24),
+            ),
+            Text(
+              widget.aqi,
+              style: const TextStyle(fontSize: 24),
+            ),
           ],
         ),
       ],
