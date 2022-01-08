@@ -11,10 +11,18 @@ class Database {
   }
 
   getCrops(String soil) async {
-    print(soil);
     return FirebaseFirestore.instance
         .collection('crops')
         .where('Soil', isEqualTo: soil)
+        .snapshots();
+  }
+
+  getManureExpiredMedicine() async {
+    return FirebaseFirestore.instance
+        .collection('manure')
+        .doc('expiredMedicine')
+        .collection('meds')
+        .where('key', isEqualTo: 'med1')
         .snapshots();
   }
 }

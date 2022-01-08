@@ -28,7 +28,7 @@ class _CropProfileState extends State<CropProfile> {
             color: Colors.black,
           ),
           title: const Text(
-            'Crops which can grow on your soil',
+            'Crops Information',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
           )),
       body: SingleChildScrollView(
@@ -41,7 +41,6 @@ class _CropProfileState extends State<CropProfile> {
               ),
               subtitle: Text(widget.title),
             ),
-            
             ListTile(
               title: const Text(
                 'Varities',
