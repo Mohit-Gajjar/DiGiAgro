@@ -1,16 +1,27 @@
-# digiagro
 
-A new Flutter project.
+# Problem Statement
 
-## Getting Started
+Our problem statement is Agriculture Sector
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## 🚀 Solution
+We as a team thinks of giving back to the nature what we use. By utilising the organic waste in proper way. We make an app which takes care of all the things. It asks for the location in which user is located (it must be at his/her practice where his/her grows crops, app gives information for weather, soil data, which crops is best grown in that soil.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+If someone has already crops in the field and not growing well then the app will suggest to use and make the manure from the organic waste at their home such as Expired Medicines.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## 🛠 Tools We Used
+Framework: Flutter,
+
+Backend: Firebase,
+
+Apis:  - [Weather, Air, Soil](https://docs.ambeedata.com/)
+
+CodeEditor: VsCode,
+
+Device: Android Device(Physical),
+
+API Platform: PostMan
+
+
